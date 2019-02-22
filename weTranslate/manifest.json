@@ -1,0 +1,31 @@
+{
+    "manifest_version": 2,
+    "version": "1.0",
+    "default_locale": "en",
+    "name": "__MSG_extensionName__",
+    "description": "__MSG_extensionDescription__",
+    "icons": {
+        "48": "/images/weTranslate48.png",
+        "96": "/images/weTranslate96.png"
+    },
+    "browser_action": {
+        "browser_style": false,
+        "default_popup": "html/popup_menu.html",
+        "default_icon": {
+            "16": "/images/weTranslate16.png",
+            "32": "/images/weTranslate32.png"
+        }
+    },
+    "background": {
+        "scripts": ["./data/js/background.js"]
+    },
+
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["./data/js/script.js"]
+    }],
+    "permissions": [
+        "activeTab",
+        "tabs"
+    ]
+}
