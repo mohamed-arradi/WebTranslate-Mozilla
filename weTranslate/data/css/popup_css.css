@@ -3,3 +3,13 @@ body {
     background-color: rgba(253, 220, 112, 0.8);
     width: auto;
 }
+
+
+/* Create a custom checkbox */
+
+.checkmark {
+    position: relative;
+    height: 20px;
+    width: 20px;
+    background-color: rgb(43, 93, 231);
+}

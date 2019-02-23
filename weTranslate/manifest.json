@@ -19,13 +19,9 @@
     "background": {
         "scripts": ["./data/js/background.js"]
     },
-
-    "content_scripts": [{
-        "matches": ["<all_urls>"],
-        "js": ["./data/js/script.js"]
-    }],
     "permissions": [
         "activeTab",
-        "tabs"
+        "tabs",
+        "contextMenus"
     ]
 }

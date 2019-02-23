@@ -5,11 +5,13 @@ function notifyExtension(event) {
     if (targetElement.id == "translate_button") {
         var value = document.getElementById('data-language').value;
         var engine = document.getElementById('data-engine').value;
+        var newTabOption = document.getElementById('new_tab_checkbox').checked;
 
         if (value != "0") {
             browser.runtime.sendMessage({
                 "data": value,
-                "engine": engine
+                "engine": engine,
+                "newTab": newTabOption
             });
         }
     }

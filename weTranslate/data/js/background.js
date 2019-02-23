@@ -24,7 +24,7 @@ browser.runtime.onMessage.addListener(function(data) {
 
     lang = data["data"];
     translatorEngine = data["engine"];
-
+    newTab = data["newTab"];
     var baseUrlEngine;
 
     if (translatorEngine === TranslatorEngine.GOOGLE) {
@@ -32,17 +32,27 @@ browser.runtime.onMessage.addListener(function(data) {
     } else {
         baseUrlEngine = "https://www.microsofttranslator.com/bv.aspx?from=&to=languageTarget&a=pageURL";
     }
+
     browser.tabs.query({ currentWindow: true, active: true }).then(function(tabs) {
-        let tab = tabs[0];
-        if (tab !== null) {
-            browser.tabs.update({
-                url: baseUrlEngine.replace("pageURL",
-                    encodeURI(clearedCurrentURL(translatorEngine, tab.url))).replace("languageTarget", lang)
-            });
-        }
-    }, function(error) {
-        console.error(err);
-    });
+            let tab = tabs[0];
+            if (tab !== null) {
+                let endPoint = baseUrlEngine.replace("pageURL",
+                    encodeURI(clearedCurrentURL(translatorEngine, tab.url))).replace("languageTarget", lang);
+                if (newTab === false) {
+                    browser.tabs.update({
+                        url: endPoint
+                    });
+                } else {
+                    browser.tabs.create({
+                        url: endPoint
+                    });
+                    creating.then(function(tab) {}, function(error) {});
+                }
+            }
+        },
+        function(error) {
+            console.error(err);
+        });
 });
 
 ///// Update HTML (Internationalisation)
@@ -51,3 +61,24 @@ if (browser.i18n.getUILanguage().includes("fr")) {
 } else {
     browser.browserAction.setPopup({ popup: "./data/html/popup_menu.html" });
 }
+
+
+//// Contextual Menu
+browser.contextMenus.create({
+    id: "translate-page-contextual",
+    title: "Translate Page", //browser.i18n.getMessage("contextMenuItemSelectionLogger"),
+    contexts: ["all"],
+    icons: {
+        "16": "/images/weTranslate16.png",
+        "32": "/images/weTranslate32.png"
+    }
+});
+
+
+browser.contextMenus.onClicked.addListener(function(info, tab) {
+    switch (info.menuItemId) {
+        case "translate-page-contextual":
+            console.log(info.selectionText);
+            break;
+    }
+})
