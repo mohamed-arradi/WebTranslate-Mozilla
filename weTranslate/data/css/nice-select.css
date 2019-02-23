@@ -9,8 +9,7 @@
     margin: 0 0 1.5em 0;
     overflow: hidden;
     /* 
-		Le select natif pourra 
-		dépasser sans être vu 
+		Native select cannot be overflowed without been seen
 	*/
 }
 
@@ -20,8 +19,7 @@
     appearance: none;
     width: 110%;
     /* 
-		On est sûr de ne plus voir
-		la flèche native 
+    We are sure to not see anymore the native arrow
 	*/
     height: auto;
     border: 0;
@@ -31,13 +29,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     /* 
-		On empêche le texte d'aller
-		jusqu'au bout s'il est trop long
+    We avoid the text to read the end if it is too long
 	*/
 }
 
 .formfield-select--container::after {
-    /* Le pointeur du select */
     content: '';
     position: absolute;
     top: 50%;
