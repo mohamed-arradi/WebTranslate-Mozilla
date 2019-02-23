@@ -1,11 +1,28 @@
 const TranslatorEngine = {
-    GOOGLE: 'google',
-    BING: 'bing',
+        GOOGLE: 'google',
+        BING: 'bing',
+    }
+    //avoid multiple chained translation
+function clearedCurrentURL(engine, currentURL) {
+
+    var chainedTranslated;
+
+    if (engine === "google") {
+        chainedTranslated = currentURL.split("&u=");
+    } else if (engine === "bing") {
+        chainedTranslated = currentURL.split("&a=");
+    }
+
+    if (chainedTranslated === null || chainedTranslated.length == 0) {
+        return currentURL;
+    } else {
+        return chainedTranslated[chainedTranslated.length - 1];
+    }
 }
+
 browser.runtime.onMessage.addListener(function(data) {
 
     lang = data["data"];
-    currentUrl = data["current_url"];
     translatorEngine = data["engine"];
 
     var baseUrlEngine;
@@ -17,10 +34,10 @@ browser.runtime.onMessage.addListener(function(data) {
     }
     browser.tabs.query({ currentWindow: true, active: true }).then(function(tabs) {
         let tab = tabs[0];
-        if (tab !== null && currentUrl !== null) {
+        if (tab !== null) {
             browser.tabs.update({
                 url: baseUrlEngine.replace("pageURL",
-                    encodeURI(tab.url)).replace("languageTarget", lang)
+                    encodeURI(clearedCurrentURL(translatorEngine, tab.url))).replace("languageTarget", lang)
             });
         }
     }, function(error) {

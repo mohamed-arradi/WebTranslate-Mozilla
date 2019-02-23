@@ -9,7 +9,6 @@ function notifyExtension(event) {
         if (value != "0") {
             browser.runtime.sendMessage({
                 "data": value,
-                "current_url": window.location.href,
                 "engine": engine
             });
         }
