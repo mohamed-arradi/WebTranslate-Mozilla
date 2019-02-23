@@ -6,17 +6,14 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="../css/popup_css.css" />
     <link rel="stylesheet" href="../css/styled_button.css" />
+    <link rel="stylesheet" href="../css/nice-select.css" />
     <script src="../js/popup-extension.js"></script>
 </head>
 
 <body>
-
-    <select name="engine" id="data-engine">
-                <option value="google" selected>Google</option>
-                <option value="bing">Microsoft Bing</option>
-     </select>
-
-    <select name="language" id="data-language">
+    <div class="formfield-select">
+        <div class="formfield-select--container">
+            <select class="formfield-select--container" name="language" id="data-language">
          <option value="0">-Choisissez une langue--</option>
          <option value="en">Anglais</option>
          <option value="af">Afrikaans</option>
@@ -122,11 +119,22 @@
          <option value="yi">Yiddish</option>
          <option value="yo">Yoruba</option>
          <option value="zu">Zulu</option>
-      </select>
-    </br>
-    </br>
-    </br>
-    <button id="translate_button" class="favorite styled" type="button">Traduire</button>
+    </select>
+        </div>
+    </div>
+    <button id="translate_button" class="favorite styled" type="button">
+        Traduire
+    </button>
+    <br><br>
+    <label>Modifier votre moteur de traduction (optionnel)</label>
+    <div class="formfield-select">
+        <div class="formfield-select--container">
+            <select name="engine" id="data-engine">
+             <option value="google" selected>Google</option>
+             <option value="bing">Microsoft Bing</option>
+        </select>
+        </div>
+    </div>
 </body>
 
 </html>
