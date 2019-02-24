@@ -17,11 +17,13 @@
         }
     },
     "background": {
-        "scripts": ["./data/js/background.js"]
+        "scripts": ["./data/js/background.mjs"]
     },
     "permissions": [
         "activeTab",
         "tabs",
-        "contextMenus"
+        "contextMenus",
+        "menus",
+        "webRequest"
     ]
 }

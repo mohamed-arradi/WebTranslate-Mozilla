@@ -7,5 +7,9 @@
     "extensionDescription": {
         "message": "WeTranslate give you the ability to translate your web page in 104 different languages!.",
         "description": "WeTranslate give you the ability to translate your web page in 104 different languages!. Just select your language and click translate"
+    },
+    "contextMenuItemTranslation": {
+        "message": "Translate this page",
+        "description": ""
     }
 }

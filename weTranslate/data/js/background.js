@@ -1,3 +1,5 @@
+import { languagesResources } from 'resources';
+
 const TranslatorEngine = {
         GOOGLE: 'google',
         BING: 'bing',
@@ -20,8 +22,7 @@ function clearedCurrentURL(engine, currentURL) {
     }
 }
 
-browser.runtime.onMessage.addListener(function(data) {
-
+function translate(data, browser) {
     lang = data["data"];
     translatorEngine = data["engine"];
     newTab = data["newTab"];
@@ -53,6 +54,9 @@ browser.runtime.onMessage.addListener(function(data) {
         function(error) {
             console.error(err);
         });
+}
+browser.runtime.onMessage.addListener(function(data) {
+    translate(data, browser);
 });
 
 ///// Update HTML (Internationalisation)
@@ -62,23 +66,19 @@ if (browser.i18n.getUILanguage().includes("fr")) {
     browser.browserAction.setPopup({ popup: "./data/html/popup_menu.html" });
 }
 
+var fileToUseForLanguage = browser.i18n.getUILanguage().includes("fr") ? languagesResources("fr") : languagesResources("en");
+var dataJson = JSON.parse(frLanguageJSON);
 
-//// Contextual Menu
-browser.contextMenus.create({
-    id: "translate-page-contextual",
-    title: "Translate Page", //browser.i18n.getMessage("contextMenuItemSelectionLogger"),
-    contexts: ["all"],
-    icons: {
-        "16": "/images/weTranslate16.png",
-        "32": "/images/weTranslate32.png"
-    }
-});
-
+for (key in dataJson) {
+    browser.contextMenus.create({
+        id: dataJson[key]["language"],
+        title: dataJson[key]["name"],
+        type: "checkbox",
+        contexts: ["all"]
+    });
+}
 
 browser.contextMenus.onClicked.addListener(function(info, tab) {
-    switch (info.menuItemId) {
-        case "translate-page-contextual":
-            console.log(info.selectionText);
-            break;
-    }
-})
+    //info.menuItemId
+    //translate(data,browser);
+});
