@@ -55,6 +55,7 @@ function translate(data, browser) {
             console.error(err);
         });
 }
+
 browser.runtime.onMessage.addListener(function(data) {
     translate(data, browser);
 });
