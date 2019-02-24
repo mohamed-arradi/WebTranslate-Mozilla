@@ -10,20 +10,25 @@
     },
     "browser_action": {
         "browser_style": false,
-        "default_popup": "html/popup_menu.html",
+        "default_popup": "./data/html/popup_menu.html",
         "default_icon": {
             "16": "/images/weTranslate16.png",
             "32": "/images/weTranslate32.png"
         }
     },
     "background": {
-        "scripts": ["./data/js/background.mjs"]
+        "scripts": ["./data/js/background.js"]
+    },
+    "applications": {
+        "gecko": {
+            "id": "98a81af4-fb95-4bd5-addd-72e6d3957dde"
+        }
     },
     "permissions": [
         "activeTab",
         "tabs",
         "contextMenus",
         "menus",
-        "webRequest"
+        "storage"
     ]
 }
