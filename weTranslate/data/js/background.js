@@ -20,7 +20,6 @@ function clearedCurrentURL(engine, currentURL) {
     }
 }
 
-
 function savePreferencesStorage(lang, engine, newTabOption) {
 
     var preferences = {
@@ -28,16 +27,19 @@ function savePreferencesStorage(lang, engine, newTabOption) {
         engine: engine,
         newTabOption: newTabOption
     }
+
     browser.storage.sync.set({ preferences });
 }
 
-function translate(data, browser) {
+function translate(data, browser, savePreference) {
     lang = data["data"];
     translatorEngine = data["engine"];
     newTab = data["newTab"];
     var baseUrlEngine;
 
-    savePreferencesStorage(lang, translatorEngine, newTab);
+    if (savePreference == true) {
+        savePreferencesStorage(lang, translatorEngine, newTab);
+    }
 
     if (translatorEngine === TranslatorEngine.GOOGLE) {
         baseUrlEngine = "https://translate.google.com/translate?hl=en&sl=auto&tl=languageTarget&u=pageURL";
@@ -68,7 +70,7 @@ function translate(data, browser) {
 }
 
 browser.runtime.onMessage.addListener(function(data) {
-    translate(data, browser);
+    translate(data, browser, true);
 });
 
 ///// Update HTML (Internationalisation)
@@ -95,13 +97,22 @@ for (key in dataJson) {
 browser.contextMenus.onClicked.addListener(function(info, tab) {
 
     var getting = browser.storage.sync.get("preferences");
+
     getting.then(function(preferences) {
         console.log(preferences);
+        var pref = {
+            data: info.menuItemId,
+            engine: typeof preferences.engine === 'undefined' ? "tt" : preferences.engine,
+            newTab: typeof preferences.newTabOption === 'undefined' ? false : preferences.newTabOption
+        };
+        console.log(pref);
+        translate(pref, browser, false);
+    }, function(error) {
         let data = {
             "data": info.menuItemId,
-            "engine": preferences.engine,
-            "newTab": preferences.newTabOption
+            "engine": GOOGLE,
+            "newTab": false
         };
-        translate(data, browser);
-    }, function(error) {});
+        translate(data, browser, false);
+    });
 });
