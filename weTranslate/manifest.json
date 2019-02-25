@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "version": "1.0",
+    "version": "0.0.1",
     "default_locale": "en",
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
@@ -21,7 +21,7 @@
     },
     "applications": {
         "gecko": {
-            "id": "98a81af4-fb95-4bd5-addd-72e6d3957dde@arradi.fr"
+            "id": "98a81af4-fb95-4bd5-addd-72e6d3957dde@wetranslate.fr"
         }
     },
     "permissions": [

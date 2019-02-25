@@ -12,6 +12,19 @@
     background-color: rgb(1, 116, 223);
 }
 
+.support {
+    background-color: rgb(1, 116, 223);
+    color: #fff;
+    position: relative;
+    border-radius: 5px;
+}
+
+.support:hover {
+    position: relative;
+    background-color: rgb(1, 116, 223);
+    color: #fff;
+}
+
 .styled:hover {
     background-color: rgb(1, 116, 223);
 }
