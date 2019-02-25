@@ -17,5 +17,4 @@ function notifyExtension(event) {
     }
 }
 
-///
 window.addEventListener("click", notifyExtension);

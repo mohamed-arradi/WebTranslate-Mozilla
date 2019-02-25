@@ -6,7 +6,6 @@ const TranslatorEngine = {
 function clearedCurrentURL(engine, currentURL) {
 
     var chainedTranslated;
-
     if (engine === "google") {
         chainedTranslated = currentURL.split("&u=");
     } else if (engine === "bing") {
@@ -21,13 +20,11 @@ function clearedCurrentURL(engine, currentURL) {
 }
 
 function savePreferencesStorage(lang, engine, newTabOption) {
-
     var preferences = {
         lang: lang,
         engine: engine,
         newTabOption: newTabOption
     }
-
     browser.storage.sync.set({ preferences });
 }
 
@@ -39,16 +36,14 @@ function processInformation(data, browser, savePreference) {
     translate(lang, translatorEngine, newTab, savePreference, browser);
 }
 
-
 function processContextData(data, browser, savePreference) {
 
-    console.log(data);
     var lang = data.targetLang;
-    console.log(lang);
-    //var translatorEngine = data["engine"];
-    // newTab = data["newTab"];
+    var optionalData = JSON.parse(data.additionalData);
+    var translatorEngine = optionalData.preferences.engine;
+    var newTab = optionalData.preferences.newTabOption;
 
-    // translate(lang, translatorEngine, newTab, savePreference, browser);
+    translate(lang, translatorEngine, newTab, savePreference, browser);
 }
 
 function translate(lang, translatorEngine, newTab, savePreference, browser) {
@@ -113,12 +108,8 @@ for (key in dataJson) {
 }
 
 browser.contextMenus.onClicked.addListener(function(info, tab) {
-
     var getting = browser.storage.sync.get("preferences");
-
     getting.then(function(preferences) {
-        console.log(preferences);
-        
         var pref = {
             targetLang: info.menuItemId,
             additionalData: JSON.stringify(preferences)
