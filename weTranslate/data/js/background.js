@@ -31,10 +31,28 @@ function savePreferencesStorage(lang, engine, newTabOption) {
     browser.storage.sync.set({ preferences });
 }
 
-function translate(data, browser, savePreference) {
+function processInformation(data, browser, savePreference) {
     lang = data["data"];
     translatorEngine = data["engine"];
     newTab = data["newTab"];
+
+    translate(lang, translatorEngine, newTab, savePreference, browser);
+}
+
+
+function processContextData(data, browser, savePreference) {
+
+    console.log(data);
+    var lang = data.targetLang;
+    console.log(lang);
+    //var translatorEngine = data["engine"];
+    // newTab = data["newTab"];
+
+    // translate(lang, translatorEngine, newTab, savePreference, browser);
+}
+
+function translate(lang, translatorEngine, newTab, savePreference, browser) {
+  
     var baseUrlEngine;
 
     if (savePreference == true) {
@@ -47,30 +65,30 @@ function translate(data, browser, savePreference) {
         baseUrlEngine = "https://www.microsofttranslator.com/bv.aspx?from=&to=languageTarget&a=pageURL";
     }
 
-    browser.tabs.query({ currentWindow: true, active: true }).then(function(tabs) {
-            let tab = tabs[0];
-            if (tab !== null) {
-                let endPoint = baseUrlEngine.replace("pageURL",
-                    encodeURI(clearedCurrentURL(translatorEngine, tab.url))).replace("languageTarget", lang);
-                if (newTab === false) {
-                    browser.tabs.update({
-                        url: endPoint
-                    });
-                } else {
-                    browser.tabs.create({
-                        url: endPoint
-                    });
-                    creating.then(function(tab) {}, function(error) {});
-                }
+    browser.tabs.query({ currentWindow: true, active: true }).then(function (tabs) {
+        let tab = tabs[0];
+        if (tab !== null) {
+            let endPoint = baseUrlEngine.replace("pageURL",
+                encodeURI(clearedCurrentURL(translatorEngine, tab.url))).replace("languageTarget", lang);
+            if (newTab === false) {
+                browser.tabs.update({
+                    url: endPoint
+                });
+            } else {
+                browser.tabs.create({
+                    url: endPoint
+                });
+                creating.then(function (tab) { }, function (error) { });
             }
-        },
-        function(error) {
+        }
+    },
+        function (error) {
             console.error(err);
         });
 }
 
 browser.runtime.onMessage.addListener(function(data) {
-    translate(data, browser, true);
+    processInformation(data, browser, true);
 });
 
 ///// Update HTML (Internationalisation)
@@ -100,13 +118,12 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
 
     getting.then(function(preferences) {
         console.log(preferences);
+        
         var pref = {
-            data: info.menuItemId,
-            engine: typeof preferences.engine === 'undefined' ? "tt" : preferences.engine,
-            newTab: typeof preferences.newTabOption === 'undefined' ? false : preferences.newTabOption
+            targetLang: info.menuItemId,
+            additionalData: JSON.stringify(preferences)
         };
-        console.log(pref);
-        translate(pref, browser, false);
+        processContextData(pref,browser,false);
     }, function(error) {
         let data = {
             "data": info.menuItemId,
