@@ -43,6 +43,10 @@ function processContextData(data, browser, savePreference) {
     var translatorEngine = optionalData.preferences.engine;
     var newTab = optionalData.preferences.newTabOption;
 
+    if (typeof translatorEngine === 'undefined' || typeof newTab === 'undefined') {
+        translate(lang, GOOGLE, false, savePreference, browser);
+        return;
+    }
     translate(lang, translatorEngine, newTab, savePreference, browser);
 }
 
