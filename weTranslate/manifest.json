@@ -1,0 +1,34 @@
+{
+    "manifest_version": 2,
+    "version": "0.0.1",
+    "default_locale": "en",
+    "name": "__MSG_extensionName__",
+    "description": "__MSG_extensionDescription__",
+    "icons": {
+        "48": "/images/weTranslate48.png",
+        "96": "/images/weTranslate96.png"
+    },
+    "browser_action": {
+        "browser_style": false,
+        "default_popup": "./data/html/popup_menu.html",
+        "default_icon": {
+            "16": "/images/weTranslate16.png",
+            "32": "/images/weTranslate32.png"
+        }
+    },
+    "background": {
+        "scripts": ["./data/js/background.js"]
+    },
+    "applications": {
+        "gecko": {
+            "id": "98a81af4-fb95-4bd5-addd-72e6d3957dde@webtranslate.fr"
+        }
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "contextMenus",
+        "menus",
+        "storage"
+    ]
+}
