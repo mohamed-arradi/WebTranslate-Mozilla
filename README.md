@@ -1,27 +1,27 @@
-# We Translate Mozilla Firefox 
-> We Translate is a very efficient Firefox Add-on which help you to translate a web page to more that 104 languages very easily.
+# Web Translate Mozilla Firefox 
+> WebTranslate is a very efficient Firefox Add-on which help you to translate a web page to more that 104 languages very easily.
 
-<!-- [![Install to Firefox]][url] -->
+[![Install to Firefox]][https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/]
 
 It avoids you all the **hassle** from copying the URL, finding a online tool (itools,etc..).
 
 Here just select you language and click translate ! You can even choose the translator engine if you prefer one from another.
 
 ** AddOn Bar **
-![](/imgs/wetranslate-context-extension.jpg)
+![](https://addons.cdn.mozilla.net/user-media/previews/full/215/215636.png?modified=1551301492)
 
 ** Browser Context Menu **
-![](/imgs/wetranslate-firefox-extension.jpg)
+![](https://addons.cdn.mozilla.net/user-media/previews/full/215/215637.png?modified=1551301494)
 
 ## Installation
 
 Firefox:
 
-// Link to come
+https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/
 
 Google Chrome:
 
-// Link to come
+//TODO :)
 
 ## Usage Example
 
@@ -41,8 +41,6 @@ in order to add the wetranslate extension to your browser as a debugging mode yo
 
 ## Meta
 
-Your Name – [@arradimohamed](https://twitter.com/arradimohamed) – hello@arradimohamed.fr
+Mohamed Arradi-Alaoui – [@arradimohamed](https://twitter.com/arradimohamed) – hello@arradimohamed.fr
 
-Distributed under the GNU license. See ``LICENSE`` for more information.
-
-## LICENCE
+Distributed under the GNU license.
