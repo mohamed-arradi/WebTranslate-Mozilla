@@ -29,9 +29,9 @@ https://itunes.apple.com/us/app/wetranslate-web-translator/id1453329866?l=en&mt=
 
 ## Usage Example
 
-A small video is better than words !
+A small video is better than words ! https://www.youtube.com/watch?v=3DRIBld38yQ
 
-![WebTranslate](https://img.youtube.com/vi/3DRIBld38yQ/0.jpg)](https://www.youtube.com/watch?v=3DRIBld38yQ)
+![WebTranslate](https://img.youtube.com/vi/3DRIBld38yQ/0.jpg)
  
 
 ## Development Setup
