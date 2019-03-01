@@ -7,7 +7,7 @@ It avoids you all the **hassle** from copying the URL, finding a online tool (it
 
 Here just select you language and click translate ! You can even choose the translator engine if you prefer one from another.
 
-** AddOn Bar **
+**AddOn Bar**
 ![](https://addons.cdn.mozilla.net/user-media/previews/full/215/215636.png?modified=1551301492)
 
 ** Browser Context Menu **
@@ -15,17 +15,24 @@ Here just select you language and click translate ! You can even choose the tran
 
 ## Installation
 
-Firefox:
+**Firefox**:
 
 https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/
 
-Google Chrome:
+**Google Chrome**:
 
 //TODO :)
 
+**Safari**:
+
+https://itunes.apple.com/us/app/wetranslate-web-translator/id1453329866?l=en&mt=12
+
 ## Usage Example
 
-A small video is better than words ! 
+A small video is better than words !
+
+![WebTranslate](https://img.youtube.com/vi/3DRIBld38yQ/0.jpg)](https://www.youtube.com/watch?v=3DRIBld38yQ)
+ 
 
 ## Development Setup
 
