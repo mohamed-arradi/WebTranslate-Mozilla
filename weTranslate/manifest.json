@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "version": "0.0.1",
+    "version": "1.0.1",
     "default_locale": "en",
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
@@ -17,7 +17,9 @@
         }
     },
     "background": {
-        "scripts": ["./data/js/background.js"]
+        "scripts": [
+            "./data/js/background.js"
+        ]
     },
     "applications": {
         "gecko": {
