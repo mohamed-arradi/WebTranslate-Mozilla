@@ -28,12 +28,14 @@ function clearedCurrentURL(engine, currentURL) {
     }
 }
 
-function savePreferencesStorage(lang, engine, newTabOption) {
+function savePreferencesStorage(lang, engine, newTabOption, newWindowOption) {
     var preferences = {
         lang: lang,
         engine: engine,
-        newTabOption: newTabOption
+        newTabOption: newTabOption,
+        newWindowOption: newWindowOption
     }
+
     browser.storage.sync.set({ preferences });
 }
 
@@ -41,8 +43,9 @@ function processInformation(data, browser, savePreference) {
     lang = data["data"];
     translatorEngine = data["engine"];
     newTab = data["newTab"];
+    newWindow = data['newWindow'];
 
-    translate(lang, translatorEngine, newTab, savePreference, browser);
+    translate(lang, translatorEngine, newTab, newWindow, savePreference, browser);
 }
 
 function processContextData(data, browser, savePreference) {
@@ -51,16 +54,15 @@ function processContextData(data, browser, savePreference) {
     var translatorEngine = optionalData.preferences.engine;
     var newTab = optionalData.preferences.newTabOption;
 
-    translate(lang, translatorEngine, newTab, savePreference, browser);
-
+    translate(lang, translatorEngine, newTab, false, savePreference, browser);
 }
 
-function translate(lang, translatorEngine, newTab, savePreference, browser) {
+function translate(lang, translatorEngine, newTab, newWindow, savePreference, browser) {
 
     var baseUrlEngine;
 
     if (savePreference == true) {
-        savePreferencesStorage(lang, translatorEngine, newTab);
+        savePreferencesStorage(lang, translatorEngine, newTab, newWindow);
     }
 
     if (translatorEngine === TranslatorEngine.GOOGLE) {
@@ -69,11 +71,17 @@ function translate(lang, translatorEngine, newTab, savePreference, browser) {
         baseUrlEngine = "https://www.microsofttranslator.com/bv.aspx?from=&to=languageTarget&a=pageURL";
     }
 
-    browser.tabs.query({ currentWindow: true, active: true }).then(function(tabs) {
-            let tab = tabs[0];
-            if (tab !== null) {
-                let endPoint = baseUrlEngine.replace("pageURL",
-                    encodeURI(clearedCurrentURL(translatorEngine, tab.url))).replace("languageTarget", lang);
+    browser.tabs.query({ currentWindow: true, active: true }).then(function (tabs) {
+        let tab = tabs[0];
+        if (tab !== null) {
+            let endPoint = baseUrlEngine.replace("pageURL",
+                encodeURI(clearedCurrentURL(translatorEngine, tab.url))).replace("languageTarget", lang);
+
+            if (newWindow === true) {
+                browser.windows.create({
+                    url: [endPoint]
+                });
+            } else {
                 if (newTab === false) {
                     browser.tabs.update({
                         url: endPoint
@@ -84,8 +92,9 @@ function translate(lang, translatorEngine, newTab, savePreference, browser) {
                     });
                 }
             }
-        },
-        function(error) {
+        }
+    },
+        function (error) {
             console.error(err);
         });
 }
@@ -107,9 +116,9 @@ for (key in dataJson) {
 ////////// LISTENERS ////////////
 ////////////////////////////////
 
-browser.contextMenus.onClicked.addListener(function(info, tab) {
+browser.contextMenus.onClicked.addListener(function (info, tab) {
     var getting = browser.storage.sync.get("preferences");
-    getting.then(function(preferences) {
+    getting.then(function (preferences) {
         if (preferences.isEmpty == false) {
             var pref = {
                 targetLang: info.menuItemId,
@@ -123,12 +132,12 @@ browser.contextMenus.onClicked.addListener(function(info, tab) {
             };
             processContextData(pref, browser, false);
         }
-    }, function(error) {
+    }, function (error) {
         console.log(error);
     });
 });
 
-browser.runtime.onMessage.addListener(function(data) {
+browser.runtime.onMessage.addListener(function (data) {
     if (typeof data.type === 'undefined') {
         processInformation(data, browser, true);
     } else {

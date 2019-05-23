@@ -6,12 +6,14 @@ function notifyExtension(event) {
         var lang = document.getElementById('data-language').value;
         var engine = document.getElementById('data-engine').value;
         var newTabOption = document.getElementById('new_tab_checkbox').checked;
+        var newWindowOption = document.getElementById('new_window_checkbox').checked;
 
         if (lang != "0") {
             browser.runtime.sendMessage({
                 "data": lang,
                 "engine": engine,
-                "newTab": newTabOption
+                "newTab": newTabOption,
+                "newWindow": newWindowOption
             });
         }
     } else if (targetElement.id === "support_us") {
@@ -21,4 +23,44 @@ function notifyExtension(event) {
     }
 }
 
+function saveOptions(e) {
+    browser.storage.local.set({
+        languageSaved: document.getElementById('data-language').value,
+        newTabOption: document.getElementById('new_tab_checkbox').checked,
+        newWindowOption: document.getElementById('new_window_checkbox').checked
+    });
+    e.preventDefault();
+}
+
+function restoreOptions() {
+
+    document.getElementById('data-language').addEventListener("change", saveOptions);
+
+    document.getElementById('new_window_checkbox').addEventListener('change', (event) => {
+        if (event.target.checked) {
+            document.getElementById('new_tab_checkbox').checked = false;
+        }
+        saveOptions()
+    })
+    document.getElementById('new_tab_checkbox').addEventListener('change', (event) => {
+        if (event.target.checked) {
+            document.getElementById('new_window_checkbox').checked = false;
+        }
+        saveOptions()
+    })
+
+    var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'newWindowOption']);
+
+    gettingItem.then((res) => {
+        if (res.languageSaved !== undefined) {
+            document.getElementById('data-language').value = res.languageSaved;
+        }
+        document.getElementById('new_tab_checkbox').checked = res.newTabOption;
+        document.getElementById('new_window_checkbox').checked = res.newWindowOption;
+    });
+}
+//// Window Listeners
 window.addEventListener("click", notifyExtension);
+window.addEventListener('DOMContentLoaded', restoreOptions);
+
+
