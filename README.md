@@ -41,6 +41,11 @@ If you want to contribute you are more than welcome ! Just fork it and make some
 in order to add the wetranslate extension to your browser as a debugging mode you need to follow those step very well described from Mozilla 
 
 ## Release History
+
+* 1.0.1
+    * Langage is now saved and no need to reselect everytime.
+    * New window mode available. You can now load the transation to a new window instead of just a new tab.
+
 * 0.1.0
     * Add Preferences in local storage 
     * Added Translation from the browser context menu
