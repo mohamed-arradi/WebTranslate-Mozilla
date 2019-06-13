@@ -58,7 +58,9 @@ function restoreOptions() {
             document.getElementById('data-language').value = res.languageSaved;
         }
         document.getElementById('new_tab_checkbox').checked = res.newTabOption;
-        document.getElementById('data-engine').value = res.engineSaved;
+        if (res.engineSaved !== undefined) {
+            document.getElementById('data-engine').value = res.engineSaved;
+        }
         document.getElementById('new_window_checkbox').checked = res.newWindowOption;
     });
 }
