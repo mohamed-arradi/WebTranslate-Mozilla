@@ -42,7 +42,9 @@ in order to add the wetranslate extension to your browser as a debugging mode yo
 
 ## Release History
 
-
+* 1.0.3
+    * Default Translator Engine was not set on fresh start.
+    
 * 1.0.2 (Based on User Review  from 1.0.1) 
     * Implemented a translate engine caching mechanism.
     * Implemented an easy way to translate a web page from the contextual menu. One single click is now enough and it use saved preferences.
