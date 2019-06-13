@@ -16,10 +16,6 @@
             "32": "/images/weTranslate32.png"
         }
     },
-    "web_accessible_resources": [
-        "./data/resources/languages-fr.json",
-        "./data/resources/languages.json"
-    ],
     "background": {
         "scripts": [
             "./data/js/background.js"
