@@ -42,6 +42,11 @@ in order to add the wetranslate extension to your browser as a debugging mode yo
 
 ## Release History
 
+
+* 1.0.2 (Based on User Review  from 1.0.1) 
+    * Implemented a translate engine caching mechanism.
+    * Implemented an easy way to translate a web page from the contextual menu. One single click is now enough and it use saved preferences.
+
 * 1.0.1
     * Langage is now saved and no need to reselect everytime.
     * New window mode available. You can now load the transation to a new window instead of just a new tab.
