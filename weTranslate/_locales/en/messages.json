@@ -3,13 +3,12 @@
         "message": "WebTranslate",
         "description": "WebTranslate give you the ability to translate your web page in 104 different languages!. Just select your language and click translate"
     },
-
     "extensionDescription": {
         "message": "WebTranslate give you the ability to translate your web page in 104 different languages!.",
         "description": "WebTranslate give you the ability to translate your web page in 104 different languages!. Just select your language and click translate"
     },
     "contextMenuItemTranslation": {
-        "message": "Translate this page",
+        "message": "Translate page with WebTranslate",
         "description": ""
     }
 }

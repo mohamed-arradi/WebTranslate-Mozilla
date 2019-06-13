@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "version": "1.0.1",
+    "version": "1.0.2",
     "default_locale": "en",
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
@@ -16,6 +16,10 @@
             "32": "/images/weTranslate32.png"
         }
     },
+    "web_accessible_resources": [
+        "./data/resources/languages-fr.json",
+        "./data/resources/languages.json"
+    ],
     "background": {
         "scripts": [
             "./data/js/background.js"

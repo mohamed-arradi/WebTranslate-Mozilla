@@ -26,6 +26,7 @@ function notifyExtension(event) {
 function saveOptions(e) {
     browser.storage.local.set({
         languageSaved: document.getElementById('data-language').value,
+        engineSaved: document.getElementById('data-engine').value,
         newTabOption: document.getElementById('new_tab_checkbox').checked,
         newWindowOption: document.getElementById('new_window_checkbox').checked
     });
@@ -35,6 +36,7 @@ function saveOptions(e) {
 function restoreOptions() {
 
     document.getElementById('data-language').addEventListener("change", saveOptions);
+    document.getElementById('data-engine').addEventListener("change", saveOptions);
 
     document.getElementById('new_window_checkbox').addEventListener('change', (event) => {
         if (event.target.checked) {
@@ -49,16 +51,18 @@ function restoreOptions() {
         saveOptions()
     })
 
-    var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'newWindowOption']);
+    var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption']);
 
     gettingItem.then((res) => {
         if (res.languageSaved !== undefined) {
             document.getElementById('data-language').value = res.languageSaved;
         }
         document.getElementById('new_tab_checkbox').checked = res.newTabOption;
+        document.getElementById('data-engine').value = res.engineSaved;
         document.getElementById('new_window_checkbox').checked = res.newWindowOption;
     });
 }
+
 //// Window Listeners
 window.addEventListener("click", notifyExtension);
 window.addEventListener('DOMContentLoaded', restoreOptions);
