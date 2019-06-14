@@ -1,0 +1,14 @@
+{
+    "extensionName": {
+        "message": "WebTranslate",
+        "description": "WebTranslate vous permet de traduire votre page Web dans plus de 104 langues différentes!"
+    },
+    "extensionDescription": {
+        "message": "WebTranslate vous permet de traduire votre page Web dans plus de 104 langues différentes!",
+        "description": "WebTranslate vous permet de traduire votre page Web dans plus de 104 langues différentes!"
+    },
+    "contextMenuItemTranslation": {
+        "message": "Traduire la page avec WebTranslate",
+        "description": ""
+    }
+}
