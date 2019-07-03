@@ -1,6 +1,20 @@
+///// Update HTML with Internationalisation
+////////////////////////////////
+if (browser.i18n.getUILanguage().includes("fr")) {
+    browser.browserAction.setPopup({ popup: "../data/html/popup_menu-fr.html" });
+} else {
+    browser.browserAction.setPopup({ popup: "../data/html/popup_menu.html" });
+}
+
+var globalSelectedText = "";
+
 const TranslatorEngine = {
     GOOGLE: 'google',
     BING: 'bing'
+}
+const ContextMenuId = {
+    GeneralTranslate: 'general-translate',
+    TextTranslate: 'text-translate'
 }
 
 function clearedCurrentURL(engine, currentURL) {
@@ -49,6 +63,33 @@ function processContextData(data, browser, savePreference) {
     translate(lang, translatorEngine, newTab, newWindow, savePreference, browser);
 }
 
+function translateText(text) {
+    var url = "https://translate.yandex.net/api/v1.5/tr.json/translate",
+        keyAPI = "trnsl.1.1.20190701T182519Z.657c4fee9d3024f1.de4417e0b5a028b9a82682757192e007a8f10a6a";
+    var xhr = new XMLHttpRequest();
+    var gettingItem = browser.storage.local.get(['languageSaved']);
+    gettingItem.then((res) => {
+        let lang = res.languageSaved === undefined ? "en" : res.languageSaved;
+        data = "key=" + keyAPI + "&text=" + text + "&lang=" + lang;
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(data);
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var res = this.responseText;
+                var json = JSON.parse(res);
+                if (json.code == 200) {
+                    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+                        browser.tabs.sendMessage(tabs[0].id, {
+                            translation: json.text[0]
+                        }, function (response) { });
+                    });
+                }
+            }
+        }
+    });
+}
+
 function translate(lang, translatorEngine, newTab, newWindow, savePreference, browser) {
 
     var baseUrlEngine;
@@ -93,9 +134,15 @@ function translate(lang, translatorEngine, newTab, newWindow, savePreference, br
 
 ////// Create contextual Menu 
 browser.contextMenus.create({
-    id: "translate-context",
+    id: ContextMenuId.GeneralTranslate,
     title: browser.i18n.getMessage("contextMenuItemTranslation"),
     contexts: ["all"]
+});
+
+browser.contextMenus.create({
+    id: ContextMenuId.TextTranslate,
+    title: browser.i18n.getMessage("contextMenuItemTextTranslation"),
+    contexts: ["selection"]
 });
 
 ////////// LISTENERS ////////////
@@ -103,25 +150,35 @@ browser.contextMenus.create({
 
 browser.contextMenus.onClicked.addListener(function (info, tab) {
 
-    var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption']);
-    gettingItem.then((res) => {
-        let lang = res.languageSaved === undefined ? "en" : res.languageSaved;
-        let engine = res.engineSaved === undefined ? "google" : res.engineSaved;
-        let newTabOption = res.newTabOption === undefined ? true : res.newTabOption;
-        let newWindow = res.newWindowOption === undefined ? false : res.newWindowOption;
+    if (info.menuItemId == ContextMenuId.GeneralTranslate) {
+        var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption']);
+        gettingItem.then((res) => {
+            let lang = res.languageSaved === undefined ? "en" : res.languageSaved;
+            let engine = res.engineSaved === undefined ? "google" : res.engineSaved;
+            let newTabOption = res.newTabOption === undefined ? true : res.newTabOption;
+            let newWindow = res.newWindowOption === undefined ? false : res.newWindowOption;
 
-        var pref = {
-            targetLang: lang,
-            additionalData: JSON.stringify({
-                "preferences": { "engine": engine, "newTabOption": newTabOption, "newWindow": newWindow }
-            })
-        };
-        processContextData(pref, browser, false);
-    });
+            var pref = {
+                targetLang: lang,
+                additionalData: JSON.stringify({
+                    "preferences": { "engine": engine, "newTabOption": newTabOption, "newWindow": newWindow }
+                })
+            };
+            processContextData(pref, browser, false);
+        });
+    } else if (info.menuItemId == ContextMenuId.TextTranslate) {
+        if (globalSelectedText !== undefined) {
+            console.log(globalSelectedText);
+            translateText(globalSelectedText);
+        }
+    }
 });
 
 browser.runtime.onMessage.addListener(function (data) {
-    if (typeof data.type === 'undefined') {
+    if (data.type === "text-copied") {
+        globalSelectedText = data.selectedText;
+    }
+    else if (typeof data.type === 'undefined') {
         processInformation(data, browser, true);
     } else {
         browser.tabs.create({
@@ -131,10 +188,3 @@ browser.runtime.onMessage.addListener(function (data) {
 });
 
 
-///// Update HTML with Internationalisation
-////////////////////////////////
-if (browser.i18n.getUILanguage().includes("fr")) {
-    browser.browserAction.setPopup({ popup: "../data/html/popup_menu-fr.html" });
-} else {
-    browser.browserAction.setPopup({ popup: "../data/html/popup_menu.html" });
-}

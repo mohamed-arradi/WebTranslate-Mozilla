@@ -1,6 +1,6 @@
 {
     "manifest_version": 2,
-    "version": "1.0.3",
+    "version": "1.1.0",
     "default_locale": "en",
     "name": "__MSG_extensionName__",
     "description": "__MSG_extensionDescription__",
@@ -21,6 +21,17 @@
             "./data/js/background.js"
         ]
     },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "./data/js/content-script.js",
+                "./data/js/tippy.js"
+            ]
+        }
+    ],
     "applications": {
         "gecko": {
             "id": "98a81af4-fb95-4bd5-addd-72e6d3957dde@webtranslate.fr"

@@ -8,7 +8,11 @@
         "description": "WebTranslate give you the ability to translate your web page in 104 different languages!. Just select your language and click translate"
     },
     "contextMenuItemTranslation": {
-        "message": "Translate page with WebTranslate",
+        "message": "Translate Page with WebTranslate",
+        "description": ""
+    },
+    "contextMenuItemTextTranslation": {
+        "message": "Translate Text with WebTranslate",
         "description": ""
     }
 }

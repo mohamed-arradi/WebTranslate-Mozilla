@@ -10,5 +10,9 @@
     "contextMenuItemTranslation": {
         "message": "Traduire la page avec WebTranslate",
         "description": ""
+    },
+    "contextMenuItemTextTranslation": {
+        "message": "Traduire ce texte avec WebTranslate",
+        "description": ""
     }
 }
