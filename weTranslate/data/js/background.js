@@ -1,6 +1,20 @@
+///// Update HTML with Internationalisation
+////////////////////////////////
+if (browser.i18n.getUILanguage().includes("fr")) {
+    browser.browserAction.setPopup({ popup: "../data/html/popup_menu-fr.html" });
+} else {
+    browser.browserAction.setPopup({ popup: "../data/html/popup_menu.html" });
+}
+
+var globalSelectedText = "";
+
 const TranslatorEngine = {
     GOOGLE: 'google',
     BING: 'bing'
+}
+const ContextMenuId = {
+    GeneralTranslate: 'general-translate',
+    TextTranslate: 'text-translate'
 }
 
 function clearedCurrentURL(engine, currentURL) {
@@ -49,6 +63,61 @@ function processContextData(data, browser, savePreference) {
     translate(lang, translatorEngine, newTab, newWindow, savePreference, browser);
 }
 
+function translateText(text) {
+    var keys = ["trnsl.1.1.20190705T162442Z.e2f7f8176e937e72.0a8a5883cf2890160d44265700be211bde80f53d", "trnsl.1.1.20190705T162120Z.68321efaae927724.74671ca2319f06a1bd9d7d9306178aa7594cc247"];
+    var keyAPI = keys[Math.floor(Math.random() * keys.length)];
+
+    var url = "https://translate.yandex.net/api/v1.5/tr.json/translate";
+    var xhr = new XMLHttpRequest();
+    var gettingItem = browser.storage.local.get(['languageSaved']);
+    gettingItem.then((res) => {
+        let lang = res.languageSaved === undefined ? "en" : res.languageSaved;
+        data = "key=" + keyAPI + "&text=" + text + "&lang=" + lang;
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.send(data);
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var res = this.responseText;
+                var json = JSON.parse(res);
+                processTranslation(json, this.status);
+            }
+        }
+    });
+}
+
+function processTranslation(json, status) {
+
+    if (status == 200) {
+        sendMessageToContentScript({
+            translation: json.text[0],
+            titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
+        });
+    } else if (status != 200) {
+        var translation = "";
+
+        switch (status) {
+            case 413:
+                translation = browser.i18n.getMessage("translationErrorTextTooBig")
+            case 422:
+                translation = browser.i18n.getMessage("translationError")
+            case 501:
+                translation = browser.i18n.getMessage("translationNotSupported")
+        }
+
+        sendMessageToContentScript({
+            translation: translation,
+            titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
+        });
+    }
+}
+
+function sendMessageToContentScript(jsonMessage) {
+    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        browser.tabs.sendMessage(tabs[0].id, jsonMessage, function (response) { });
+    });
+}
+
 function translate(lang, translatorEngine, newTab, newWindow, savePreference, browser) {
 
     var baseUrlEngine;
@@ -86,16 +155,20 @@ function translate(lang, translatorEngine, newTab, newWindow, savePreference, br
             }
         }
     },
-        function (error) {
-            console.error(err);
-        });
+        function (error) { });
 }
 
 ////// Create contextual Menu 
 browser.contextMenus.create({
-    id: "translate-context",
+    id: ContextMenuId.GeneralTranslate,
     title: browser.i18n.getMessage("contextMenuItemTranslation"),
     contexts: ["all"]
+});
+
+browser.contextMenus.create({
+    id: ContextMenuId.TextTranslate,
+    title: browser.i18n.getMessage("contextMenuItemTextTranslation"),
+    contexts: ["selection"]
 });
 
 ////////// LISTENERS ////////////
@@ -103,25 +176,34 @@ browser.contextMenus.create({
 
 browser.contextMenus.onClicked.addListener(function (info, tab) {
 
-    var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption']);
-    gettingItem.then((res) => {
-        let lang = res.languageSaved === undefined ? "en" : res.languageSaved;
-        let engine = res.engineSaved === undefined ? "google" : res.engineSaved;
-        let newTabOption = res.newTabOption === undefined ? true : res.newTabOption;
-        let newWindow = res.newWindowOption === undefined ? false : res.newWindowOption;
+    if (info.menuItemId == ContextMenuId.GeneralTranslate) {
+        var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption']);
+        gettingItem.then((res) => {
+            let lang = res.languageSaved === undefined ? "en" : res.languageSaved;
+            let engine = res.engineSaved === undefined ? "google" : res.engineSaved;
+            let newTabOption = res.newTabOption === undefined ? true : res.newTabOption;
+            let newWindow = res.newWindowOption === undefined ? false : res.newWindowOption;
 
-        var pref = {
-            targetLang: lang,
-            additionalData: JSON.stringify({
-                "preferences": { "engine": engine, "newTabOption": newTabOption, "newWindow": newWindow }
-            })
-        };
-        processContextData(pref, browser, false);
-    });
+            var pref = {
+                targetLang: lang,
+                additionalData: JSON.stringify({
+                    "preferences": { "engine": engine, "newTabOption": newTabOption, "newWindow": newWindow }
+                })
+            };
+            processContextData(pref, browser, false);
+        });
+    } else if (info.menuItemId == ContextMenuId.TextTranslate) {
+        if (globalSelectedText !== undefined) {
+            translateText(globalSelectedText);
+        }
+    }
 });
 
 browser.runtime.onMessage.addListener(function (data) {
-    if (typeof data.type === 'undefined') {
+    if (data.type === "text-copied") {
+        globalSelectedText = data.selectedText;
+    }
+    else if (typeof data.type === 'undefined') {
         processInformation(data, browser, true);
     } else {
         browser.tabs.create({
@@ -131,10 +213,3 @@ browser.runtime.onMessage.addListener(function (data) {
 });
 
 
-///// Update HTML with Internationalisation
-////////////////////////////////
-if (browser.i18n.getUILanguage().includes("fr")) {
-    browser.browserAction.setPopup({ popup: "../data/html/popup_menu-fr.html" });
-} else {
-    browser.browserAction.setPopup({ popup: "../data/html/popup_menu.html" });
-}

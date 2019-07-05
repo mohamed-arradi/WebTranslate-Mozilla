@@ -10,8 +10,6 @@ Here just select you language and click translate ! You can even choose the tran
 **AddOn Bar**
 ![](https://addons.cdn.mozilla.net/user-media/previews/full/215/215636.png?modified=1551301492)
 
-** Browser Context Menu **
-![](https://addons.cdn.mozilla.net/user-media/previews/full/215/215637.png?modified=1551301494)
 
 ## Installation
 
@@ -21,7 +19,7 @@ https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/
 
 **Google Chrome**:
 
-//TODO :)
+https://chrome.google.com/webstore/detail/webtranslate/gdmapdijiljmjingeihifkgchmfiaaic
 
 **Safari**:
 
@@ -32,7 +30,10 @@ https://itunes.apple.com/us/app/wetranslate-web-translator/id1453329866?l=en&mt=
 A small video is better than words ! https://www.youtube.com/watch?v=3DRIBld38yQ
 
 ![WebTranslate](https://img.youtube.com/vi/3DRIBld38yQ/0.jpg)
- 
+
+An additional video to explain the partial text translation 
+
+![WebTranslate-TextTranslation](https://www.youtube.com/watch?v=PaYlxgowDyY&feature=youtu.be)
 
 ## Development Setup
 
@@ -42,6 +43,9 @@ in order to add the wetranslate extension to your browser as a debugging mode yo
 
 ## Release History
 
+* 2.0
+    * Added Partial Text translation from within the web page
+    
 * 1.0.3
     * Default Translator Engine was not set on fresh start.
     

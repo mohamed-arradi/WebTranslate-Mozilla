@@ -8,7 +8,27 @@
         "description": "WebTranslate give you the ability to translate your web page in 104 different languages!. Just select your language and click translate"
     },
     "contextMenuItemTranslation": {
-        "message": "Translate page with WebTranslate",
+        "message": "Translate Page with WebTranslate",
+        "description": ""
+    },
+    "contextMenuItemTextTranslation": {
+        "message": "Translate Text with WebTranslate",
+        "description": ""
+    },
+    "translationPopUpTitle": {
+        "message": "Your Translation",
+        "description": ""
+    },
+    "translationErrorTextTooBig": {
+        "message": "Your text is too big to be translated. Try to slice it in multiples pieces",
+        "description": ""
+    },
+    "translationError": {
+        "message": "Your text cannot be translated in your language.",
+        "description": ""
+    },
+    "translationNotSupported": {
+        "message": "Unfortunately your language is not yet supported by Yandex.",
         "description": ""
     }
 }
