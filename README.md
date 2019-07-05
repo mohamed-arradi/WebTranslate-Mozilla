@@ -1,7 +1,7 @@
 # Web Translate Mozilla Firefox 
 > WebTranslate is a very efficient Firefox Add-on which help you to translate a web page to more that 104 languages very easily.
 
-![Install to Firefox][https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/]
+![Install to Firefox](https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/)
 
 It avoids you all the **hassle** from copying the URL, finding a online tool (itools,etc..).
 
@@ -41,21 +41,21 @@ in order to add the wetranslate extension to your browser as a debugging mode yo
 
 ## Release History
 
-**2.0
+**2.0**
     * Added Partial Text translation from within the web page
     
-**1.0.3
+**1.0.3**
     * Default Translator Engine was not set on fresh start.
     
-**1.0.2 (Based on User Review  from 1.0.1) 
+**1.0.2 (Based on User Review  from 1.0.1)**
     * Implemented a translate engine caching mechanism.
     * Implemented an easy way to translate a web page from the contextual menu. One single click is now enough and it use saved preferences.
 
-**1.0.1
+**1.0.1**
     * Langage is now saved and no need to reselect everytime.
     * New window mode available. You can now load the transation to a new window instead of just a new tab.
 
-**0.1.0
+**0.1.0**
     * Add Preferences in local storage 
     * Added Translation from the browser context menu
     * Translation via the browser bar icon
