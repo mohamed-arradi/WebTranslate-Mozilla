@@ -80,32 +80,36 @@ function translateText(text) {
             if (this.readyState == 4 && this.status == 200) {
                 var res = this.responseText;
                 var json = JSON.parse(res);
-
-                if (json.code == 200) {
-                    sendMessageToContentScript({
-                        translation: json.text[0],
-                        titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
-                    });
-                }
-            } else if (this.status != 200) {
-                var translation = "";
-
-                switch (this.status) {
-                    case 413:
-                        translation = browser.i18n.getMessage("translationErrorTextTooBig")
-                    case 422:
-                        translation = browser.i18n.getMessage("translationError")
-                    case 501:
-                        translation = browser.i18n.getMessage("translationNotSupported")
-                }
-
-                sendMessageToContentScript({
-                    translation: translation,
-                    titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
-                });
+                processTranslation(json, this.status);
             }
         }
     });
+}
+
+function processTranslation(json, status) {
+
+    if (status == 200) {
+        sendMessageToContentScript({
+            translation: json.text[0],
+            titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
+        });
+    } else if (status != 200) {
+        var translation = "";
+
+        switch (status) {
+            case 413:
+                translation = browser.i18n.getMessage("translationErrorTextTooBig")
+            case 422:
+                translation = browser.i18n.getMessage("translationError")
+            case 501:
+                translation = browser.i18n.getMessage("translationNotSupported")
+        }
+
+        sendMessageToContentScript({
+            translation: translation,
+            titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
+        });
+    }
 }
 
 function sendMessageToContentScript(jsonMessage) {
