@@ -28,7 +28,11 @@
             ],
             "js": [
                 "./data/js/content-script.js",
-                "./data/js/tippy.js"
+                "./data/js/injectionHelper.js",
+                "./data/js/tingle.js"
+            ],
+            "css": [
+                "./data/css/tingle.css"
             ]
         }
     ],

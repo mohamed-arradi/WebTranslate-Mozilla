@@ -14,5 +14,9 @@
     "contextMenuItemTextTranslation": {
         "message": "Translate Text with WebTranslate",
         "description": ""
+    },
+    "translationPopUpTitle": {
+        "message": "Your Translation",
+        "description": ""
     }
 }

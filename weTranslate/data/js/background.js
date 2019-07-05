@@ -81,7 +81,8 @@ function translateText(text) {
                 if (json.code == 200) {
                     browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                         browser.tabs.sendMessage(tabs[0].id, {
-                            translation: json.text[0]
+                            translation: json.text[0],
+                            titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
                         }, function (response) { });
                     });
                 }
@@ -168,7 +169,6 @@ browser.contextMenus.onClicked.addListener(function (info, tab) {
         });
     } else if (info.menuItemId == ContextMenuId.TextTranslate) {
         if (globalSelectedText !== undefined) {
-            console.log(globalSelectedText);
             translateText(globalSelectedText);
         }
     }
