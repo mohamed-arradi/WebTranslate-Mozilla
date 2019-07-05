@@ -7,10 +7,6 @@ It avoids you all the **hassle** from copying the URL, finding a online tool (it
 
 Here just select you language and click translate ! You can even choose the translator engine if you prefer one from another.
 
-**AddOn Bar**
-![](https://addons.cdn.mozilla.net/user-media/previews/full/215/215636.png?modified=1551301492)
-
-
 ## Installation
 
 **Firefox**:
@@ -29,11 +25,13 @@ https://itunes.apple.com/us/app/wetranslate-web-translator/id1453329866?l=en&mt=
 
 A small video is better than words ! https://www.youtube.com/watch?v=3DRIBld38yQ
 
+**AddOn Bar**
+
 ![WebTranslate](https://img.youtube.com/vi/3DRIBld38yQ/0.jpg)
 
 An additional video to explain the partial text translation 
 
-![WebTranslate-TextTranslation](https://www.youtube.com/watch?v=PaYlxgowDyY&feature=youtu.be)
+![WebTranslateTextTranslation](https://img.youtube.com/vi/PaYlxgowDyY/0.jpg)
 
 ## Development Setup
 
@@ -43,21 +41,21 @@ in order to add the wetranslate extension to your browser as a debugging mode yo
 
 ## Release History
 
-* 2.0
+**2.0
     * Added Partial Text translation from within the web page
     
-* 1.0.3
+**1.0.3
     * Default Translator Engine was not set on fresh start.
     
-* 1.0.2 (Based on User Review  from 1.0.1) 
+**1.0.2 (Based on User Review  from 1.0.1) 
     * Implemented a translate engine caching mechanism.
     * Implemented an easy way to translate a web page from the contextual menu. One single click is now enough and it use saved preferences.
 
-* 1.0.1
+**1.0.1
     * Langage is now saved and no need to reselect everytime.
     * New window mode available. You can now load the transation to a new window instead of just a new tab.
 
-* 0.1.0
+**0.1.0
     * Add Preferences in local storage 
     * Added Translation from the browser context menu
     * Translation via the browser bar icon
