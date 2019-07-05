@@ -78,16 +78,37 @@ function translateText(text) {
             if (this.readyState == 4 && this.status == 200) {
                 var res = this.responseText;
                 var json = JSON.parse(res);
+
                 if (json.code == 200) {
-                    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-                        browser.tabs.sendMessage(tabs[0].id, {
-                            translation: json.text[0],
-                            titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
-                        }, function (response) { });
+                    sendMessageToContentScript({
+                        translation: json.text[0],
+                        titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
                     });
                 }
+            } else if (this.status != 200) {
+                var translation = "";
+
+                switch (this.status) {
+                    case 413:
+                        translation = browser.i18n.getMessage("translationErrorTextTooBig")
+                    case 422:
+                        translation = browser.i18n.getMessage("translationError")
+                    case 501:
+                        translation = browser.i18n.getMessage("translationNotSupported")
+                }
+
+                sendMessageToContentScript({
+                    translation: translation,
+                    titleTranslation: browser.i18n.getMessage("translationPopUpTitle")
+                });
             }
         }
+    });
+}
+
+function sendMessageToContentScript(jsonMessage) {
+    browser.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        browser.tabs.sendMessage(tabs[0].id, jsonMessage, function (response) { });
     });
 }
 
@@ -128,9 +149,7 @@ function translate(lang, translatorEngine, newTab, newWindow, savePreference, br
             }
         }
     },
-        function (error) {
-            console.error(err);
-        });
+        function (error) { });
 }
 
 ////// Create contextual Menu 

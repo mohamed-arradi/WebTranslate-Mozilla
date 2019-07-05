@@ -18,5 +18,17 @@
     "translationPopUpTitle": {
         "message": "Votre Traduction",
         "description": ""
+    },
+    "translationErrorTextTooBig": {
+        "message": "Votre texte est trop grand pour être traduit. Veuillez réessayer avec un texte plus petit.",
+        "description": ""
+    },
+    "translationError": {
+        "message": "Ce texte ne peut être traduit dans votre langue",
+        "description": ""
+    },
+    "translationNotSupported": {
+        "message": "Malheureusement votre langue de traduction n'est pas supportée par Yandex.",
+        "description": ""
     }
 }
