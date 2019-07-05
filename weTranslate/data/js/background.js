@@ -64,8 +64,10 @@ function processContextData(data, browser, savePreference) {
 }
 
 function translateText(text) {
-    var url = "https://translate.yandex.net/api/v1.5/tr.json/translate",
-        keyAPI = "trnsl.1.1.20190701T182519Z.657c4fee9d3024f1.de4417e0b5a028b9a82682757192e007a8f10a6a";
+    var keys = ["trnsl.1.1.20190705T162442Z.e2f7f8176e937e72.0a8a5883cf2890160d44265700be211bde80f53d", "trnsl.1.1.20190705T162120Z.68321efaae927724.74671ca2319f06a1bd9d7d9306178aa7594cc247"];
+    var keyAPI = keys[Math.floor(Math.random() * keys.length)];
+
+    var url = "https://translate.yandex.net/api/v1.5/tr.json/translate";
     var xhr = new XMLHttpRequest();
     var gettingItem = browser.storage.local.get(['languageSaved']);
     gettingItem.then((res) => {
