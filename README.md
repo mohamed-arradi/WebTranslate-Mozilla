@@ -31,6 +31,8 @@ A small video is better than words ! https://www.youtube.com/watch?v=3DRIBld38yQ
 
 An additional video to explain the partial text translation 
 
+**https://www.youtube.com/watch?v=PaYlxgowDyY**
+
 ![WebTranslateTextTranslation](https://img.youtube.com/vi/PaYlxgowDyY/0.jpg)
 
 ## Development Setup
