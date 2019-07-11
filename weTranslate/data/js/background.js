@@ -207,7 +207,7 @@ browser.runtime.onMessage.addListener(function (data) {
         processInformation(data, browser, true);
     } else {
         browser.tabs.create({
-            url: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CK4Y594T6K5LL&source=url"
+            url: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RUFXEXSGY7UAY&source=url"
         });
     }
 });

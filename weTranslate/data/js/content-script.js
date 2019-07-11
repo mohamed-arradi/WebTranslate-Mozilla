@@ -24,7 +24,7 @@ function showPopUpWithTranslation(translation, titleTranslation) {
         }
     });
 
-    var content = '<h2 align="center"><strong><u>' + titleTranslation + '</u></strong></h2><br/><p style="font-size:50px" align="center">&#128526;</p><br/><br/><h1><strong>' + translation + '<strong></h1>';
+    var content = '<h2 align="center"><strong><u>' + titleTranslation + '</u></strong></h2><br/><p style="font-size:50px" align="center">&#128526;</p><br/><br/><h2><strong>' + translation + '<strong></h2>';
 
     modal.setContent(content);
     modal.addFooterBtn('OK', 'tingle-btn tingle-btn--primary', function () {
