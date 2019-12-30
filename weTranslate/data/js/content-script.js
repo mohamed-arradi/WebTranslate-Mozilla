@@ -35,33 +35,40 @@ function showPopUpWithTranslation(translation, titleTranslation) {
 
 function cleanHeaders() {
 
-    var gtBar = document.getElementById("wtgbr");
-    if (typeof(gtBar) != 'undefined' && gtBar != null) {
-        gtBar.remove();
-    }
-    var gtSmallBar = document.getElementById("gt-c");
-    if (typeof(gtSmallBar) != 'undefined' && gtSmallBar != null) {
-        gtSmallBar.remove();
-    }
-    
-    var microsoftHeaderDiv = document.getElementById("divBVHeader");
-    
-    if (typeof(microsoftHeaderDiv) != 'undefined' && microsoftHeaderDiv != null) {
-        microsoftHeaderDiv.remove();
-    }
-    
-    var contentFrame = document.getElementById("contentframe");
-    
-    if (typeof(contentFrame) != 'undefined' && contentFrame != null) {
-        document.getElementById("contentframe").style = "top: 0px; left: 0px";
-    } else {
-        
-        var contentMicrosoft = document.getElementById("divContent");
-        
-        if (typeof(contentMicrosoft) != 'undefined' && contentMicrosoft != null) {
-            document.getElementById("divContent").style = "top: 0px; left: 0px";
+    var gettingItem = browser.storage.local.get(['showTranslatorToolbar']);
+    gettingItem.then((res) => {
+
+        let showToolbar = res.showTranslatorToolbar === undefined ? false : res.showTranslatorToolbar;
+        if (showToolbar === false) {
+            var gtBar = document.getElementById("wtgbr");
+            if (typeof (gtBar) != 'undefined' && gtBar != null) {
+                gtBar.remove();
+            }
+            var gtSmallBar = document.getElementById("gt-c");
+            if (typeof (gtSmallBar) != 'undefined' && gtSmallBar != null) {
+                gtSmallBar.remove();
+            }
+
+            var microsoftHeaderDiv = document.getElementById("divBVHeader");
+
+            if (typeof (microsoftHeaderDiv) != 'undefined' && microsoftHeaderDiv != null) {
+                microsoftHeaderDiv.remove();
+            }
+
+            var contentFrame = document.getElementById("contentframe");
+
+            if (typeof (contentFrame) != 'undefined' && contentFrame != null) {
+                document.getElementById("contentframe").style = "top: 0px; left: 0px";
+            } else {
+
+                var contentMicrosoft = document.getElementById("divContent");
+
+                if (typeof (contentMicrosoft) != 'undefined' && contentMicrosoft != null) {
+                    document.getElementById("divContent").style = "top: 0px; left: 0px";
+                }
+            }
         }
-    }
+    });
 }
 
 cleanHeaders();

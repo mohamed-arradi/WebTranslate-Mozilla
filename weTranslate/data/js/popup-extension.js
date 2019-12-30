@@ -7,13 +7,15 @@ function notifyExtension(event) {
         var engine = document.getElementById('data-engine').value;
         var newTabOption = document.getElementById('new_tab_checkbox').checked;
         var newWindowOption = document.getElementById('new_window_checkbox').checked;
+        var showTranslatorToolbarOption = document.getElementById('remove_toolbar_checkbox').checked;
 
         if (lang != "0") {
             browser.runtime.sendMessage({
                 "data": lang,
                 "engine": engine,
                 "newTab": newTabOption,
-                "newWindow": newWindowOption
+                "newWindow": newWindowOption,
+                "showTranslatorToolbar": showTranslatorToolbarOption
             });
         }
     } else if (targetElement.id === "support_us") {
@@ -28,7 +30,8 @@ function saveOptions(e) {
         languageSaved: document.getElementById('data-language').value,
         engineSaved: document.getElementById('data-engine').value,
         newTabOption: document.getElementById('new_tab_checkbox').checked,
-        newWindowOption: document.getElementById('new_window_checkbox').checked
+        newWindowOption: document.getElementById('new_window_checkbox').checked,
+        showTranslatorToolbar: document.getElementById('remove_toolbar_checkbox').checked
     });
     e.preventDefault();
 }
@@ -37,6 +40,7 @@ function restoreOptions() {
 
     document.getElementById('data-language').addEventListener("change", saveOptions);
     document.getElementById('data-engine').addEventListener("change", saveOptions);
+    document.getElementById('remove_toolbar_checkbox').addEventListener("change", saveOptions);
 
     document.getElementById('new_window_checkbox').addEventListener('change', (event) => {
         if (event.target.checked) {
@@ -51,7 +55,7 @@ function restoreOptions() {
         saveOptions()
     })
 
-    var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption']);
+    var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption', 'showTranslatorToolbar']);
 
     gettingItem.then((res) => {
         if (res.languageSaved !== undefined) {
@@ -62,6 +66,7 @@ function restoreOptions() {
             document.getElementById('data-engine').value = res.engineSaved;
         }
         document.getElementById('new_window_checkbox').checked = res.newWindowOption;
+        document.getElementById('remove_toolbar_checkbox').checked = res.showTranslatorToolbar;
     });
 }
 

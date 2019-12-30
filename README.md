@@ -43,6 +43,10 @@ in order to add the wetranslate extension to your browser as a debugging mode yo
 
 ## Release History
 
+**2.0.5**
+
+    * Add option to show or hide Google or Bing Toolbar
+    
 **2.0**
 
     * Added Partial Text translation from within the web page
