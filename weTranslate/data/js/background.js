@@ -33,12 +33,13 @@ function clearedCurrentURL(engine, currentURL) {
     }
 }
 
-function savePreferencesStorage(lang, engine, newTabOption, newWindowOption) {
+function savePreferencesStorage(lang, engine, newTabOption, newWindowOption, showTranslatorToolbar) {
     var preferences = {
         lang: lang,
         engine: engine,
         newTabOption: newTabOption,
-        newWindowOption: newWindowOption
+        newWindowOption: newWindowOption,
+        showTranslatorToolbar: showTranslatorToolbar
     }
 
     browser.storage.sync.set({ preferences });
@@ -49,8 +50,9 @@ function processInformation(data, browser, savePreference) {
     translatorEngine = data["engine"];
     newTab = data["newTab"];
     newWindow = data['newWindow'];
+    showTranslatorToolbar = data['showTranslatorToolbar'];
 
-    translate(lang, translatorEngine, newTab, newWindow, savePreference, browser);
+    translate(lang, translatorEngine, newTab, newWindow, showTranslatorToolbar, savePreference, browser);
 }
 
 function processContextData(data, browser, savePreference) {
@@ -59,8 +61,9 @@ function processContextData(data, browser, savePreference) {
     var translatorEngine = optionalData.preferences.engine;
     var newTab = optionalData.preferences.newTabOption;
     var newWindow = optionalData.preferences.newWindow;
+    var showTranslatorToolbar = optionalData.preferences.translatorToolBarOn;
 
-    translate(lang, translatorEngine, newTab, newWindow, savePreference, browser);
+    translate(lang, translatorEngine, newTab, newWindow, showTranslatorToolbar, savePreference, browser);
 }
 
 function translateText(text) {
@@ -118,12 +121,12 @@ function sendMessageToContentScript(jsonMessage) {
     });
 }
 
-function translate(lang, translatorEngine, newTab, newWindow, savePreference, browser) {
+function translate(lang, translatorEngine, newTab, newWindow, showTranslatorToolbar, savePreference, browser) {
 
     var baseUrlEngine;
 
     if (savePreference == true) {
-        savePreferencesStorage(lang, translatorEngine, newTab, newWindow);
+        savePreferencesStorage(lang, translatorEngine, newTab, newWindow, showTranslatorToolbar);
     }
 
     if (translatorEngine === TranslatorEngine.GOOGLE) {
@@ -155,7 +158,7 @@ function translate(lang, translatorEngine, newTab, newWindow, savePreference, br
             }
         }
     },
-        function (error) { });
+        function (error) {});
 }
 
 ////// Create contextual Menu 
@@ -177,17 +180,20 @@ browser.contextMenus.create({
 browser.contextMenus.onClicked.addListener(function (info, tab) {
 
     if (info.menuItemId == ContextMenuId.GeneralTranslate) {
-        var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption']);
+        var gettingItem = browser.storage.local.get(['languageSaved', 'newTabOption', 'engineSaved', 'newWindowOption', 'showTranslatorToolbar']);
         gettingItem.then((res) => {
             let lang = res.languageSaved === undefined ? "en" : res.languageSaved;
             let engine = res.engineSaved === undefined ? "google" : res.engineSaved;
             let newTabOption = res.newTabOption === undefined ? true : res.newTabOption;
             let newWindow = res.newWindowOption === undefined ? false : res.newWindowOption;
-
+            let showToolbar = res.showTranslatorToolbar === undefined ? false : res.showTranslatorToolbar;
             var pref = {
                 targetLang: lang,
                 additionalData: JSON.stringify({
-                    "preferences": { "engine": engine, "newTabOption": newTabOption, "newWindow": newWindow }
+                    "preferences": { "engine": engine, 
+                                    "newTabOption": newTabOption,
+                                     "newWindow": newWindow, 
+                                     "showTranslatorToolbar": showToolbar }
                 })
             };
             processContextData(pref, browser, false);
