@@ -1,6 +1,8 @@
-# Web Translate Mozilla Firefox 
+## Web Translate Mozilla Firefox 
 
 WebTranslate is a very efficient Firefox Add-on which help you to translate a web page to more that 104 languages very easily.
+
+[![Web Translate Mozilla](https://i.ibb.co/Z6SHkB1/Screen-Shot-2020-01-26-at-11-05-40-AM.png)](https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/)
 
 https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/
 
@@ -8,13 +10,11 @@ It avoids you all the **hassle** from copying the URL, finding a online tool (it
 
 Here just select you language and click translate ! You can even choose the translator engine if you prefer one from another.
 
-## Installation
+## Download / Installation
 
-**Firefox**:
+**Firefox Mozilla**:
 
-**Mozilla**: [![Video LinkedIn Downloader](https://github.com/mohamed-arradi/LinkedInVideoDownloader/blob/master/screenshots/AddToFirefox.png)](https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/)
-
-
+[![Video LinkedIn Downloader](https://github.com/mohamed-arradi/LinkedInVideoDownloader/blob/master/screenshots/AddToFirefox.png)](https://addons.mozilla.org/en-GB/firefox/addon/webtranslate/)
 
 **Google Chrome**:
 
